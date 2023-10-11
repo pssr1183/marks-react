@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  const [rollNumber, setRollNumber] = useState('');
+  const [studentData, setStudentData] = useState(null);
+
+  const fetchStudentMarks = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/students/${rollNumber}`);
+      setStudentData(response.data);
+    } catch (error) {
+      console.error(error);
+      setStudentData(null);
+      alert('Student not found or an error occurred.');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Student Marks Application</h1>
+      <div>
+        <h2>Retrieve Student Marks</h2>
+        <input
+          type="text"
+          placeholder="Enter Roll Number"
+          value={rollNumber}
+          onChange={(e) => setRollNumber(e.target.value)}
+        />
+        <button onClick={fetchStudentMarks}>Get Marks</button>
+        {studentData && (
+          <div>
+            <p>Name: {studentData.name}</p>
+            <p>Marks: {studentData.marks}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
