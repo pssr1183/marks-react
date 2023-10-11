@@ -7,7 +7,7 @@ const App = () => {
 
   const fetchStudentMarks = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/students/${rollNumber}`);
+      const response = await axios.get(`https://node-server-oey3.onrender.com/students/${rollNumber}`);
       setStudentData(response.data);
     } catch (error) {
       console.error(error);
