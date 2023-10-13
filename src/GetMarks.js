@@ -8,7 +8,7 @@ const GetMarks=()=>{
     const [marks,setMarks]=useState(null);
     const getHandler= async ()=>{
         try{
-            const response=await axios.get(`http://localhost:3001/getmarks/${rollNum}`);
+            const response=await axios.get(`https://node-server-oey3.onrender.com/getmarks/${rollNum}`);
             setMarks(response.data.marks);
         }
         catch(err){

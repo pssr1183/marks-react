@@ -13,7 +13,7 @@ const AddMarks= ()=>{
 
     const btnhandler=async ()=>{
         try{
-            const response=axios.post(`http://localhost:3001/addmarks`,{
+            const response=axios.post(`https://node-server-oey3.onrender.com/addmarks`,{
                 rollNum:rollNum,
                 fullName:fullName,
                 marks:marks,
