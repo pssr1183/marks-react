@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import Header from './Header';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Body from './Body';
+import AddMarks from './AddMarks';
+import GetMarks from './GetMarks';
 
-const App = () => {
-  const [rollNumber, setRollNumber] = useState('');
-  const [studentData, setStudentData] = useState(null);
 
-  const fetchStudentMarks = async () => {
-    try {
-      const response = await axios.get(`https://node-server-oey3.onrender.com/students/${rollNumber}`);
-      setStudentData(response.data);
-    } catch (error) {
-      console.error(error);
-      setStudentData(null);
-      alert('Student not found or an error occurred.');
-    }
-  };
-
-  return (
+const App=()=>{
+  return(
     <div>
-      <h1>Student Marks Application</h1>
-      <div>
-        <h2>Retrieve Student Marks</h2>
-        <input
-          type="text"
-          placeholder="Enter Roll Number"
-          value={rollNumber}
-          onChange={(e) => setRollNumber(e.target.value)}
-        />
-        <button onClick={fetchStudentMarks}>Get Marks</button>
-        {studentData && (
-          <div>
-            <p>Name: {studentData.name}</p>
-            <p>Marks: {studentData.marks}</p>
-          </div>
-        )}
-      </div>
+    
+      <Header/>
+      <Outlet/>
+    
     </div>
-  );
-};
+  )
+}
+export const appRouter=createBrowserRouter([
+  {
+    path:"/",
+    element:<App/>,
+    children:[
+      {
+        path:"/",
+        element:<Body/>
+      },
+      {
+        path:"/addmarks",
+        element:<AddMarks/>
+      },
+      {
+      path:"/getmarks",
+      element:<GetMarks/>}
+    ]
 
-export default App;
+  }
+])
+export default App
